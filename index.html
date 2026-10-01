@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Private AI</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0b1020;
+  color:#fff;
+}
+
+.page{
+  max-width:480px;
+  margin:auto;
+  min-height:100vh;
+  background:#111827;
+}
+
+.screen{
+  min-height:100vh;
+  padding:24px 18px;
+}
+
+.hidden{display:none!important}
+
+.logo{
+  width:72px;
+  height:72px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  display:grid;
+  place-items:center;
+  font-size:34px;
+  margin:35px auto 18px;
+}
+
+h1{
+  margin:0;
+  text-align:center;
+  font-size:27px;
+}
+
+.sub{
+  text-align:center;
+  color:#9ca3af;
+  margin:8px 0 28px;
+}
+
+.card{
+  background:#1f2937;
+  border:1px solid #374151;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:14px;
+}
+
+label{
+  display:block;
+  color:#d1d5db;
+  font-size:14px;
+  margin-bottom:8px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #4b5563;
+  background:#111827;
+  color:#fff;
+  outline:none;
+  margin-bottom:12px;
+}
+
+input:focus{
+  border-color:#818cf8;
+}
+
+.btn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:6px;
+}
+
+.btn.secondary{
+  background:#374151;
+}
+
+.small{
+  font-size:12px;
+  color:#9ca3af;
+  text-align:center;
+  line-height:1.5;
+}
+
+.otp{
+  display:flex;
+  gap:8px;
+}
+
+.otp input{
+  text-align:center;
+  font-size:22px;
+  margin:0;
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 0 20px;
+}
+
+.title{
+  font-size:22px;
+  font-weight:700;
+}
+
+.badge{
+  font-size:11px;
+  background:#14532d;
+  color:#86efac;
+  padding:7px 9px;
+  border-radius:999px;
+}
+
+.profile{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.avatar{
+  width:50px;
+  height:50px;
+  border-radius:16px;
+  background:#4f46e5;
+  display:grid;
+  place-items:center;
+  font-size:23px;
+}
+
+.muted{
+  color:#9ca3af;
+  font-size:13px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.option{
+  background:#1f2937;
+  border:1px solid #374151;
+  border-radius:18px;
+  padding:18px;
+  cursor:pointer;
+}
+
+.option b{
+  display:block;
+  margin:7px 0;
+}
+
+.option span{
+  font-size:12px;
+  color:#9ca3af;
+  line-height:1.4;
+}
+
+.callbox{
+  background:linear-gradient(135deg,#172554,#312e81);
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:14px;
+}
+
+.callrow{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.callicon{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#22c55e;
+  display:grid;
+  place-items:center;
+}
+
+.status{
+  margin:12px 0;
+  color:#c7d2fe;
+}
+
+.switchrow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid #374151;
+}
+
+.switch{
+  width:48px;
+  height:26px;
+  background:#4b5563;
+  border-radius:20px;
+  padding:3px;
+  cursor:pointer;
+}
+
+.switch i{
+  display:block;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#fff;
+  transition:.2s;
+}
+
+.switch.on{
+  background:#6366f1;
+}
+
+.switch.on i{
+  transform:translateX(22px);
+}
+
+.chat{
+  height:calc(100vh - 190px);
+  overflow:auto;
+  padding-bottom:12px;
+}
+
+.msg{
+  max-width:84%;
+  padding:12px 14px;
+  border-radius:16px;
+  margin:9px 0;
+  line-height:1.45;
+}
+
+.ai{
+  background:#1f2937;
+}
+
+.me{
+  background:#4f46e5;
+  margin-left:auto;
+}
+
+.composer{
+  display:flex;
+  gap:8px;
+}
+
+.composer input{
+  margin:0;
+}
+
+.send{
+  width:54px;
+  flex:0 0 54px;
+}
+
+.nav{
+  position:sticky;
+  bottom:0;
+  background:#111827;
+  border-top:1px solid #374151;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  padding:10px 0;
+}
+
+.nav button{
+  background:transparent;
+  border:0;
+  color:#9ca3af;
+  padding:8px;
+}
+
+.nav button.active{
+  color:#fff;
+}
+
+.notice{
+  background:#3f2a08;
+  border:1px solid #92400e;
+  color:#fde68a;
+  padding:12px;
+  border-radius:14px;
+  font-size:12px;
+  line-height:1.45;
+  margin-bottom:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<!-- LOGIN -->
+<section id="login" class="screen">
+
+<div class="logo">🤖</div>
+
+<h1>My Private AI</h1>
+
+<p class="sub">
+आपका निजी AI Assistant
+</p>
+
+<div class="card">
+
+<label>मोबाइल नंबर</label>
+
+<input
+id="phone"
+inputmode="numeric"
+maxlength="10"
+placeholder="10 अंकों का नंबर"
+>
+
+<button class="btn" onclick="goOTP()">
+Continue
+</button>
+
+<p class="small">
+Private AI Login
+</p>
+
+</div>
+
+</section>
+
+
+<!-- OTP -->
+<section id="otpScreen" class="screen hidden">
+
+<div class="logo">🔐</div>
+
+<h1>Verify Number</h1>
+
+<p class="sub">
+आपके मोबाइल नंबर की पुष्टि करें
+</p>
+
+<div class="card">
+
+<div class="otp">
+
+<input maxlength="1" inputmode="numeric">
+<input maxlength="1" inputmode="numeric">
+<input maxlength="1" inputmode="numeric">
+<input maxlength="1" inputmode="numeric">
+<input maxlength="1" inputmode="numeric">
+<input maxlength="1" inputmode="numeric">
+
+</div>
+
+<button class="btn" onclick="verifyDemo()">
+Verify
+</button>
+
+<button class="btn secondary" onclick="show('login')">
+Back
+</button>
+
+<p class="small">
+Real OTP के लिए backend और OTP service जोड़नी होगी।
+</p>
+
+</div>
+
+</section>
+
+
+<!-- PROFILE -->
+<section id="profile" class="screen hidden">
+
+<div class="logo">👤</div>
+
+<h1>अपना प्रोफाइल बनाएं</h1>
+
+<p class="sub">
+आपके Private AI के लिए
+</p>
+
+<div class="card">
+
+<label>नाम</label>
+
+<input
+id="name"
+placeholder="आपका नाम"
+>
+
+<label>Username</label>
+
+<input
+id="username"
+placeholder="@username"
+>
+
+<button class="btn" onclick="createProfile()">
+Continue
+</button>
+
+</div>
+
+</section>
+
+
+<!-- MAIN APP -->
+<section id="app" class="screen hidden">
+
+<div class="top">
+
+<div class="title">
+My Private AI
+</div>
+
+<div class="badge">
+PRIVATE
+</div>
+
+</div>
+
+
+<!-- HOME -->
+<div id="homeTab">
+
+<div class="profile">
+
+<div class="avatar">
+🤖
+</div>
+
+<div>
+
+<b id="welcome">
+नमस्ते
+</b>
+
+<div class="muted" id="handle">
+@username
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CALL DASHBOARD -->
+<div class="callbox">
+
+<div class="callrow">
+
+<div class="callicon">
+☎
+</div>
+
+<div>
+
+<b>
+Call Assistant
+</b>
+
+<div class="muted">
+Incoming Call Controls
+</div>
+
+</div>
+
+</div>
+
+<div class="status" id="callStatus">
+AI automatic answering: OFF
+</div>
+
+<button class="btn" onclick="setTab('calls')">
+Open Call Settings
+</button>
+
+</div>
+
+
+<div class="grid">
+
+<div class="option" onclick="setTab('chat')">
+
+💬
+
+<b>
+AI Chat
+</b>
+
+<span>
+अपने AI से बातचीत करें
+</span>
+
+</div>
+
+
+<div class="option" onclick="setTab('calls')">
+
+📞
+
+<b>
+Calls
+</b>
+
+<span>
+कॉल आने पर क्या करना है
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- AI CHAT -->
+<div id="chatTab" class="hidden">
+
+<div class="top">
+
+<div class="title">
+AI Chat
+</div>
+
+</div>
+
+
+<div class="chat" id="messages">
+
+<div class="msg ai">
+नमस्ते! मैं आपका Private AI हूँ।
+</div>
+
+</div>
+
+
+<div class="composer">
+
+<input
+id="chatInput"
+placeholder="संदेश लिखें..."
+onkeydown="if(event.key==='Enter')sendMsg()"
+>
+
+<button class="btn send" onclick="sendMsg()">
+➤
+</button>
+
+</div>
+
+</div>
+
+
+<!-- CALL SETTINGS -->
+<div id="callsTab" class="hidden">
+
+<div class="top">
+
+<div class="title">
+Call Settings
+</div>
+
+</div>
+
+
+<div class="notice">
+
+यह dashboard अभी call-control interface है।
+वास्तविक mobile calls को AI से जोड़ने के लिए
+telephony provider और backend webhook जोड़ना होगा।
+
+</div>
+
+
+<div class="card">
+
+<b>
+जब कॉल आए
+</b>
+
+
+<div class="switchrow">
+
+<span>
+AI को बात करने दें
+</span>
+
+<div
+class="switch"
+id="aiSwitch"
+onclick="toggleAI()"
+>
+
+<i></i>
+
+</div>
+
+</div>
+
+
+<div class="switchrow">
+
+<span>
+मैं उपलब्ध न रहूँ तो AI उठाए
+</span>
+
+<div
+class="switch"
+id="autoSwitch"
+onclick="toggleAuto()"
+>
+
+<i></i>
+
+</div>
+
+</div>
+
+
+<div class="switchrow">
+
+<span>
+कॉल के बाद सारांश
+</span>
+
+<div
+class="switch on"
+id="summarySwitch"
+onclick="this.classList.toggle('on')"
+>
+
+<i></i>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- INCOMING CALL OPTIONS -->
+
+<div class="card">
+
+<b>
+Incoming Call
+</b>
+
+<p class="muted">
+कॉल आने पर dashboard में ये विकल्प रहेंगे:
+</p>
+
+
+<div class="grid">
+
+<button
+class="btn"
+onclick="alert('Real app में यहाँ call आपको route होगी।')"
+>
+
+📞 मैं बात करूँ
+
+</button>
+
+
+<button
+class="btn"
+onclick="alert('Real app में यहाँ call AI voice agent को दी जाएगी।')"
+>
+
+🤖 AI बात करे
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- AUTO ANSWER -->
+
+<div class="card">
+
+<b>
+Automatic Answer
+</b>
+
+<p class="muted">
+अगर आप कॉल नहीं उठा पाएँगे,
+तो AI automatic answer कर सकता है।
+</p>
+
+<button
+class="btn"
+onclick="toggleAuto()"
+>
+
+⚙️ Auto Answer सेट करें
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- NAVIGATION -->
+
+<div class="nav">
+
+<button
+id="navHome"
+class="active"
+onclick="setTab('home')"
+>
+
+🏠
+<br>
+Home
+
+</button>
+
+
+<button
+id="navChat"
+onclick="setTab('chat')"
+>
+
+💬
+<br>
+AI
+
+</button>
+
+
+<button
+id="navCalls"
+onclick="setTab('calls')"
+>
+
+📞
+<br>
+Calls
+
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+function show(id){
+
+[
+"login",
+"otpScreen",
+"profile",
+"app"
+].forEach(function(x){
+
+document
+.getElementById(x)
+.classList
+.add("hidden");
+
+});
+
+document
+.getElementById(id)
+.classList
+.remove("hidden");
+
+}
+
+
+function goOTP(){
+
+const phone =
+document
+.getElementById("phone")
+.value
+.trim();
+
+if(!/^\d{10}$/.test(phone)){
+
+alert(
+"कृपया सही 10 अंकों का नंबर डालें।"
+);
+
+return;
+
+}
+
+show("otpScreen");
+
+}
+
+
+function verifyDemo(){
+
+const boxes =
+document.querySelectorAll(
+".otp input"
+);
+
+let code="";
+
+boxes.forEach(function(box){
+
+code += box.value;
+
+});
+
+
+if(!/^\d{6}$/.test(code)){
+
+alert(
+"6 अंकों का OTP डालें।"
+);
+
+return;
+
+}
+
+show("profile");
+
+}
+
+
+function createProfile(){
+
+const name =
+document
+.getElementById("name")
+.value
+.trim();
+
+const username =
+document
+.getElementById("username")
+.value
+.trim();
+
+
+if(!name || !username){
+
+alert(
+"नाम और username दोनों भरें।"
+);
+
+return;
+
+}
+
+
+document
+.getElementById("welcome")
+.textContent =
+"नमस्ते, " + name;
+
+
+document
+.getElementById("handle")
+.textContent =
+username.startsWith("@")
+? username
+: "@" + username;
+
+
+show("app");
+
+}
+
+
+function setTab(tab){
+
+document
+.getElementById("homeTab")
+.classList
+.toggle(
+"hidden",
+tab !== "home"
+);
+
+document
+.getElementById("chatTab")
+.classList
+.toggle(
+"hidden",
+tab !== "chat"
+);
+
+document
+.getElementById("callsTab")
+.classList
+.toggle(
+"hidden",
+tab !== "calls"
+);
+
+
+[
+"navHome",
+"navChat",
+"navCalls"
+].forEach(function(x){
+
+document
+.getElementById(x)
+.classList
+.remove("active");
+
+});
+
+
+if(tab==="home")
+document
+.getElementById("navHome")
+.classList
+.add("active");
+
+
+if(tab==="chat")
+document
+.getElementById("navChat")
+.classList
+.add("active");
+
+
+if(tab==="calls")
+document
+.getElementById("navCalls")
+.classList
+.add("active");
+
+}
+
+
+function toggleAI(){
+
+const s =
+document
+.getElementById("aiSwitch");
+
+s.classList.toggle("on");
+
+}
+
+
+function toggleAuto(){
+
+const s =
+document
+.getElementById("autoSwitch");
+
+s.classList.toggle("on");
+
+
+document
+.getElementById("callStatus")
+.textContent =
+s.classList.contains("on")
+? "AI automatic answering: ON"
+: "AI automatic answering: OFF";
+
+}
+
+
+function sendMsg(){
+
+const input =
+document
+.getElementById("chatInput");
+
+const text =
+input.value.trim();
+
+if(!text)
+return;
+
+
+const box =
+document
+.getElementById("messages");
+
+
+const userMessage =
+document.createElement("div");
+
+userMessage.className =
+"msg me";
+
+userMessage.textContent =
+text;
+
+box.appendChild(
+userMessage
+);
+
+input.value="";
+
+
+setTimeout(function(){
+
+const aiMessage =
+document.createElement("div");
+
+aiMessage.className =
+"msg ai";
+
+aiMessage.textContent =
+"यह अभी AI interface है। असली AI जवाब के लिए backend में AI model/API जोड़ना होगा।";
+
+box.appendChild(
+aiMessage
+);
+
+box.scrollTop =
+box.scrollHeight;
+
+},500);
+
+}
+
+
+document
+.querySelectorAll(".otp input")
+.forEach(function(input,index,boxes){
+
+input.addEventListener(
+"input",
+function(){
+
+if(
+input.value &&
+index < boxes.length-1
+){
+
+boxes[index+1].focus();
+
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
